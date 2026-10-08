@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Escudo con el símbolo de IA tachado. Todo dentro de la zona segura (círculo de 66dp). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Escudo -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M54,25 L79,34 V51.5 C79,67 68.5,79 54,84 C39.5,79 29,67 29,51.5 V34 Z" />
+    <!-- Destello (símbolo genérico de IA) -->
+    <path
+        android:fillColor="#FF1B5E9E"
+        android:pathData="M54,38 Q56.6,50.4 69,53 Q56.6,55.6 54,68 Q51.4,55.6 39,53 Q51.4,50.4 54,38 Z" />
+    <!-- Tachado: borde blanco para separarlo del destello -->
+    <path
+        android:pathData="M42.5,65.5 L65.5,40.5"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="7.5" />
+    <path
+        android:pathData="M42.5,65.5 L65.5,40.5"
+        android:strokeColor="#FFE5484D"
+        android:strokeLineCap="round"
+        android:strokeWidth="3.8" />
+</vector>

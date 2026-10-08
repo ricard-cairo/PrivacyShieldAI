@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Versión de un solo color para los iconos temáticos de Android 13+. El sistema aplica el color. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Escudo con el destello recortado y el tachado invertido (evenOdd) -->
+    <path
+        android:fillColor="#FF000000"
+        android:fillType="evenOdd"
+        android:pathData="M54,25 L79,34 V51.5 C79,67 68.5,79 54,84 C39.5,79 29,67 29,51.5 V34 Z M54,38 Q56.6,50.4 69,53 Q56.6,55.6 54,68 Q51.4,55.6 39,53 Q51.4,50.4 54,38 Z M43.9,66.79 L41.1,64.21 L64.1,39.21 L66.9,41.79 Z" />
+</vector>

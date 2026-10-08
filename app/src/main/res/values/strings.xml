@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Privacy Shield AI</string>
+
+    <!-- Lista -->
+    <string name="action_refresh">Actualizar</string>
+    <string name="progress_title">%1$d de %2$d plataformas protegidas</string>
+    <string name="progress_hint">Toca una plataforma para ver los pasos. Tu progreso se guarda solo en este móvil.</string>
+    <string name="section_installed">Instaladas en tu móvil</string>
+    <string name="section_other">Otras plataformas</string>
+    <string name="catalog_version">Información revisada el %1$s</string>
+
+    <!-- Estados -->
+    <string name="status_done">Hecho</string>
+    <string name="status_pending">Pendiente</string>
+    <string name="status_review">Revisar</string>
+
+    <!-- Detalle -->
+    <string name="action_back">Atrás</string>
+    <string name="steps_title">Pasos</string>
+    <string name="regions_label">Disponible en: %1$s</string>
+    <string name="review_warning">La plataforma ha cambiado desde que lo marcaste. Revisa los pasos y vuelve a comprobar el ajuste.</string>
+    <string name="action_open_setting">Abrir el ajuste</string>
+    <string name="installed_label">%1$s · Instalada en este móvil</string>
+    <string name="action_open_app">Abrir la app de %1$s</string>
+    <string name="action_send_request">Enviar solicitud por correo</string>
+    <string name="action_mark_done">Ya lo he hecho</string>
+    <string name="action_mark_pending">Marcar como pendiente</string>
+    <string name="action_view_source">Ver fuente</string>
+    <string name="link_unverified">Enlace pendiente de verificar. Si no lleva al ajuste, sigue los pasos.</string>
+    <string name="updated_on">Instrucciones revisadas el %1$s</string>
+
+    <!-- Mensajes -->
+    <string name="msg_updated">Se ha descargado información nueva</string>
+    <string name="msg_up_to_date">Ya tienes la información más reciente</string>
+    <string name="msg_failed">No se ha podido comprobar. Inténtalo más tarde.</string>
+    <string name="msg_not_configured">Actualizaciones no configuradas en esta versión</string>
+    <string name="error_no_browser">No hay ningún navegador instalado</string>
+    <string name="error_open_app">No se ha podido abrir la app</string>
+    <string name="error_no_email_app">No hay ninguna app de correo instalada</string>
+
+    <!-- Notificaciones -->
+    <string name="notif_channel_name">Cambios de política</string>
+    <string name="notif_channel_description">Avisos cuando una plataforma cambia cómo usa tus datos para IA</string>
+    <string name="notif_review_title">Revisa estos ajustes de privacidad</string>
+
+    <!-- Solicitud RGPD (se envía en inglés porque la recibe el servicio de privacidad de la plataforma) -->
+    <string name="gdpr_email_subject">GDPR Article 21 objection: use of my data for AI training</string>
+    <string name="gdpr_email_body">Hello,\n\nUnder Article 21 of the General Data Protection Regulation (GDPR), I object to the processing of my personal data, including my posts, comments and profile information, for training, fine-tuning or improving artificial intelligence models, and to its licensing to third parties for those purposes.\n\nPlease confirm within one month (Article 12(3) GDPR) that you have stopped this processing.\n\nUsername: [YOUR USERNAME]\nEmail linked to the account: [YOUR EMAIL]\n\nThank you.</string>
+</resources>

@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "dataVersion": "2026-10-08",
+  "platforms": [
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "category": "Redes sociales",
+      "mechanism": "FORM",
+      "packages": [
+        "com.instagram.android",
+        "com.instagram.lite"
+      ],
+      "regions": [
+        "UE",
+        "Reino Unido"
+      ],
+      "summary": "Meta usa publicaciones públicas para entrenar su IA. En la UE puedes oponerte con un formulario.",
+      "steps": [
+        "Abre Configuración y privacidad > Centro de privacidad > IA en Meta.",
+        "Pulsa el formulario de objeción.",
+        "Confirma tu país, escribe tu correo e introduce el código de verificación.",
+        "Envía el formulario. No hace falta justificar el motivo."
+      ],
+      "url": "https://www.facebook.com/help/contact/6359191084165019",
+      "linkVerified": true,
+      "notes": "Se aplica a todas las cuentas vinculadas en el Centro de cuentas. No borra lo que ya se haya usado para entrenar.",
+      "sourceUrl": "https://www.tobiasholm.com/tech/how-to-turn-off-meta-ai",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "category": "Redes sociales",
+      "mechanism": "FORM",
+      "packages": [
+        "com.facebook.katana",
+        "com.facebook.lite"
+      ],
+      "regions": [
+        "UE",
+        "Reino Unido"
+      ],
+      "summary": "Mismo formulario de objeción de Meta que Instagram, más otro para datos tuyos obtenidos de terceros.",
+      "steps": [
+        "Abre Configuración y privacidad > Centro de privacidad > IA en Meta.",
+        "Rellena el formulario de objeción.",
+        "Opcional: en la misma sección, rellena también el formulario de datos de terceros."
+      ],
+      "url": "https://www.facebook.com/help/contact/6359191084165019",
+      "extraUrl": "https://www.facebook.com/help/contact/510058597920541",
+      "extraUrlLabel": "Formulario de datos de terceros",
+      "linkVerified": true,
+      "notes": "Si ya lo hiciste desde Instagram con las cuentas vinculadas, puede que no sea necesario repetirlo.",
+      "sourceUrl": "https://www.tobiasholm.com/tech/how-to-turn-off-meta-ai",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "category": "Mensajería",
+      "mechanism": "NONE",
+      "packages": [
+        "com.whatsapp",
+        "com.whatsapp.w4b"
+      ],
+      "summary": "No hay interruptor. Los chats cifrados no se usan; solo lo que escribes a Meta AI.",
+      "steps": [
+        "Evita escribir a Meta AI dentro de WhatsApp.",
+        "Si ya lo usaste, escribe /reset-ai en el chat de Meta AI para borrar su historial."
+      ],
+      "linkVerified": false,
+      "sourceUrl": "https://www.iamexpat.de/expat-info/germany-news/how-european-users-can-opt-out-meta-using-their-data-train-ai",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "category": "Redes sociales",
+      "mechanism": "TOGGLE",
+      "packages": [
+        "com.linkedin.android"
+      ],
+      "summary": "LinkedIn tiene un interruptor para no usar tus datos en la mejora de su IA generativa.",
+      "steps": [
+        "Pulsa tu foto (Yo) > Configuración y privacidad.",
+        "Entra en Privacidad de datos > Datos para mejorar la IA generativa.",
+        "Desactiva el interruptor."
+      ],
+      "url": "https://www.linkedin.com/mypreferences/d/settings/data-for-ai-improvement",
+      "linkVerified": false,
+      "sourceUrl": "https://theslowai.substack.com/p/stop-ai-training-on-your-data",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "x",
+      "name": "X",
+      "category": "Redes sociales",
+      "mechanism": "TOGGLE",
+      "packages": [
+        "com.twitter.android"
+      ],
+      "summary": "X usa tus publicaciones e interacciones para entrenar Grok salvo que lo desactives.",
+      "steps": [
+        "Abre Configuración y privacidad > Privacidad y seguridad.",
+        "Entra en Compartir datos y personalización > Grok y colaboradores externos.",
+        "Desmarca la casilla que permite usar tus datos para entrenamiento."
+      ],
+      "url": "https://x.com/settings/grok_settings",
+      "linkVerified": false,
+      "notes": "Si usas la app de Grok por separado: Settings > Data Controls.",
+      "sourceUrl": "https://help.x.com/en/using-x/about-grok",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "gemini",
+      "name": "Google Gemini",
+      "category": "Asistentes de IA",
+      "mechanism": "TOGGLE",
+      "packages": [
+        "com.google.android.apps.bard"
+      ],
+      "summary": "Desactivar la actividad de Gemini evita que tus chats se usen para mejorar la IA de Google.",
+      "steps": [
+        "En la app de Gemini pulsa tu foto de perfil > Actividad en Gemini Apps.",
+        "Pulsa Activado > Desactivar.",
+        "En la web: Configuración y ayuda > Actividad > Desactivar."
+      ],
+      "url": "https://myactivity.google.com/product/gemini",
+      "linkVerified": true,
+      "notes": "El ajuste se llama \"Keep Activity\". Google conserva los chats 72 horas aunque esté desactivado.",
+      "sourceUrl": "https://support.google.com/gemini/answer/13278892",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "category": "Asistentes de IA",
+      "mechanism": "TOGGLE",
+      "packages": [
+        "com.openai.chatgpt"
+      ],
+      "summary": "ChatGPT tiene un interruptor para no usar tus conversaciones en el entrenamiento.",
+      "steps": [
+        "Abre Configuración > Controles de datos.",
+        "Desactiva \"Mejorar el modelo para todos\"."
+      ],
+      "url": "https://chatgpt.com/#settings/DataControls",
+      "linkVerified": false,
+      "notes": "Solo afecta a las conversaciones futuras.",
+      "sourceUrl": "https://www.humandatarights.org/guides/how-to-opt-out-of-ai-training/",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "category": "Asistentes de IA",
+      "mechanism": "TOGGLE",
+      "packages": [
+        "com.anthropic.claude"
+      ],
+      "summary": "Las cuentas personales de Claude eligen si sus chats se usan para mejorar los modelos.",
+      "steps": [
+        "Abre Configuración > Privacidad.",
+        "Desactiva \"Ayudar a mejorar Claude\"."
+      ],
+      "url": "https://claude.ai/settings/data-privacy-controls",
+      "linkVerified": true,
+      "sourceUrl": "https://theslowai.substack.com/p/stop-ai-training-on-your-data",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "reddit",
+      "name": "Reddit",
+      "category": "Foros",
+      "mechanism": "REQUEST",
+      "packages": [
+        "com.reddit.frontpage"
+      ],
+      "regions": [
+        "UE",
+        "Reino Unido",
+        "Suiza"
+      ],
+      "summary": "Reddit no tiene interruptor y licencia el contenido público. Puedes enviar una solicitud de oposición RGPD.",
+      "steps": [
+        "Envía un correo de oposición RGPD (botón de abajo, con texto ya preparado).",
+        "Opcional: borra publicaciones antiguas o publica solo en comunidades privadas."
+      ],
+      "email": "redditdatarequests@reddit.com",
+      "linkVerified": true,
+      "notes": "Borrar contenido evita usos futuros, pero no garantiza que terceros eliminen copias ya obtenidas.",
+      "sourceUrl": "https://meprism.com/opt-out-guides/blog/reddit-ai-data-licensing-opt-out",
+      "updatedOn": "2026-09-30"
+    },
+    {
+      "id": "adobe",
+      "name": "Adobe",
+      "category": "Herramientas creativas",
+      "mechanism": "TOGGLE",
+      "packages": [
+        "com.adobe.reader",
+        "com.adobe.spark.post",
+        "com.adobe.lrmobile",
+        "com.adobe.psmobile"
+      ],
+      "summary": "Adobe declara que no entrena su IA generativa con tu contenido (salvo Adobe Stock). Puedes desactivar el análisis de contenido.",
+      "steps": [
+        "Entra en account.adobe.com > Privacidad.",
+        "Desactiva \"Análisis de contenido para mejorar el producto\"."
+      ],
+      "url": "https://account.adobe.com/privacy",
+      "linkVerified": true,
+      "sourceUrl": "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html",
+      "updatedOn": "2026-09-30"
+    }
+  ]
+}
