@@ -117,6 +117,14 @@ PrivacyShieldAI/
 - **Publicación:** `AppConfig.REMOTE_CATALOG_URL` apunta a este mismo fichero en la rama `main` de GitHub (`raw.githubusercontent.com/ricard-cairo/PrivacyShieldAI/main/...`). **Un push a `main` con un `dataVersion` más nuevo llega a todos los usuarios**, así que antes de hacer push: subir `dataVersion`, pasar `testDebugUnitTest` y revisar los cambios. El repositorio debe seguir siendo público.
 - La app ignora un catálogo remoto con JSON inválido, con `schemaVersion` mayor al soportado o con `dataVersion` igual o anterior al que ya tiene.
 
+## Publicación en Google Play
+
+- **`applicationId`: `io.github.rc.privacyshieldai`. DEFINITIVO, no cambiarlo nunca.** El `namespace` y el paquete del código siguen siendo `com.example.privacyshieldai` (interno).
+- Firma: `app/build.gradle.kts` lee `keystore.properties` (raíz, en `.gitignore`; plantilla `keystore.properties.example`). La clave `.jks` vive fuera del proyecto. Nunca subir claves ni contraseñas.
+- Subir `versionCode` en cada `.aab` que se suba a Play.
+- Política de privacidad en `docs/` (GitHub Pages): https://ricard-cairo.github.io/PrivacyShieldAI/privacy-policy.html. Actualizarla si cambia qué datos trata la app (p. ej. un permiso nuevo).
+- Guía de publicación: `store/PUBLICAR.md`. Textos de la ficha y respuestas de seguridad de datos: `store/ficha-google-play.md`. Gráficos: `store/icon-512.png`, `store/feature-graphic.png`.
+
 ## Comandos
 
 ```
@@ -142,7 +150,8 @@ Ejecutarlos siempre después de tocar `plataformas.json` o el manifest.
 
 ## Pendiente
 
-- [ ] Cambiar `applicationId`/`namespace` de `com.example.privacyshieldai` antes de publicar (Google Play no acepta `com.example`).
+- [ ] Opcional: renombrar el paquete Kotlin `com.example.privacyshieldai` a `io.github.rc.privacyshieldai` con *Refactor > Rename* de Android Studio (es interno; no afecta a Play).
+- [ ] Hacer capturas de pantalla para la ficha de Google Play.
 - [ ] Borrar `res/layout/activity_main.xml` y quitar `appcompat` y `constraintlayout` (restos del esqueleto con Views).
 - [ ] Borrar los `.webp` de `mipmap-hdpi` a `mipmap-xxxhdpi` (icono antiguo; con minSdk 26 se usa siempre el adaptativo).
 - [ ] Confirmar en un móvil real los nombres de paquete (sobre todo Adobe y Gemini; valorar añadir la app de Google para Gemini).

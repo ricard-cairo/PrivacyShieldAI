@@ -58,6 +58,8 @@ Es una app de privacidad, así que se aplica a sí misma lo que pide a los demá
 - Solo dos permisos: **Internet** (para descargar la lista de plataformas actualizada) y **notificaciones** (para los avisos de cambios).
 - La detección de apps se limita a las 16 apps de estas plataformas (no usa el permiso para ver todas las apps instaladas).
 
+Política de privacidad completa: <https://ricard-cairo.github.io/PrivacyShieldAI/privacy-policy.html>
+
 ## Requisitos
 
 - Android 8.0 (API 26) o superior.

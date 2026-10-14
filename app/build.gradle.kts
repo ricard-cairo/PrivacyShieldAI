@@ -1,7 +1,19 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+}
+
+// Firma de la versión de publicación. Las contraseñas viven en keystore.properties (raíz del proyecto),
+// que está en .gitignore y NUNCA se sube a GitHub. Plantilla: keystore.properties.example.
+// Si el fichero no existe, la versión release se genera sin firmar (la de depuración funciona igual).
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        keystorePropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -11,8 +23,9 @@ android {
     }
 
     defaultConfig {
-        // IMPORTANTE: cambiar applicationId antes de publicar (Google Play no acepta com.example).
-        applicationId = "com.example.privacyshieldai"
+        // Identificador en Google Play. DEFINITIVO: no se puede cambiar una vez publicada la app.
+        // (El paquete del código Kotlin sigue siendo com.example.privacyshieldai; es interno y no afecta a Play.)
+        applicationId = "io.github.rc.privacyshieldai"
         minSdk = 26
         targetSdk = 37
         versionCode = 1
@@ -21,8 +34,20 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (keystorePropertiesFile.exists()) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.findByName("release")
             optimization {
                 enable = false
             }
