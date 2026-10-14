@@ -114,7 +114,8 @@ PrivacyShieldAI/
 - **`updatedOn` decide los avisos:** si cambia, quien tenía la plataforma marcada pasa a "Revisar" y recibe una notificación. Cambiarlo solo cuando la plataforma cambie de verdad su política o su ruta, no por correcciones de texto.
 - Cada ruta debe tener `sourceUrl`; preferir fuentes oficiales. Si el enlace directo no se ha comprobado, `linkVerified: false`.
 - **Al añadir o cambiar `packages`, añadir el mismo `<package>` en `<queries>` del `AndroidManifest.xml`.** `CatalogTest` falla si no coinciden. Un catálogo remoto no puede añadir paquetes nuevos sin publicar versión de la app.
-- Publicación: copiar el mismo fichero a GitHub Pages y poner su URL en `AppConfig.REMOTE_CATALOG_URL`.
+- **Publicación:** `AppConfig.REMOTE_CATALOG_URL` apunta a este mismo fichero en la rama `main` de GitHub (`raw.githubusercontent.com/ricard-cairo/PrivacyShieldAI/main/...`). **Un push a `main` con un `dataVersion` más nuevo llega a todos los usuarios**, así que antes de hacer push: subir `dataVersion`, pasar `testDebugUnitTest` y revisar los cambios. El repositorio debe seguir siendo público.
+- La app ignora un catálogo remoto con JSON inválido, con `schemaVersion` mayor al soportado o con `dataVersion` igual o anterior al que ya tiene.
 
 ## Comandos
 
@@ -144,10 +145,8 @@ Ejecutarlos siempre después de tocar `plataformas.json` o el manifest.
 - [ ] Cambiar `applicationId`/`namespace` de `com.example.privacyshieldai` antes de publicar (Google Play no acepta `com.example`).
 - [ ] Borrar `res/layout/activity_main.xml` y quitar `appcompat` y `constraintlayout` (restos del esqueleto con Views).
 - [ ] Borrar los `.webp` de `mipmap-hdpi` a `mipmap-xxxhdpi` (icono antiguo; con minSdk 26 se usa siempre el adaptativo).
-- [ ] Ocultar el botón "Actualizar" mientras `REMOTE_CATALOG_URL` sea null (propuesto, sin decidir).
 - [ ] Confirmar en un móvil real los nombres de paquete (sobre todo Adobe y Gemini; valorar añadir la app de Google para Gemini).
 - [ ] Verificar en las apps en español los pasos de `aiFeatures` (todos tienen `linkVerified: false`; varias fuentes son de terceros, sobre todo Meta, LinkedIn y Reddit).
 - [ ] Verificar en las apps en español las rutas de LinkedIn, X y ChatGPT y marcar `linkVerified`.
-- [ ] Publicar el catálogo en GitHub Pages y configurar `REMOTE_CATALOG_URL`.
 - [ ] Elegir licencia de código abierto (p. ej. GPL-3.0 o Apache-2.0) y añadir `LICENSE`.
 - [ ] Revisar `backup_rules.xml` / `data_extraction_rules.xml` (decidir si el progreso se incluye en copias de seguridad).

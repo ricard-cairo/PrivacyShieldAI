@@ -91,7 +91,10 @@ Toda la información está en [`app/src/main/assets/plataformas.json`](app/src/m
 1. Edita el JSON (pasos, enlace, fuente).
 2. Si la plataforma ha cambiado de verdad su política, actualiza su campo `updatedOn`; así los usuarios que ya la tenían hecha recibirán un aviso.
 3. Si añades paquetes Android, decláralos también en `<queries>` del `AndroidManifest.xml`.
-4. Ejecuta los tests: comprueban que el JSON es válido y coincide con el manifest.
+4. Sube `dataVersion` a la fecha de hoy.
+5. Ejecuta los tests: comprueban que el JSON es válido y coincide con el manifest.
+
+La app descarga este mismo fichero desde la rama `main` de este repositorio. Cuando se sube un cambio con un `dataVersion` más nuevo, los usuarios lo reciben sin actualizar la app.
 
 Las normas completas del proyecto están en [`CLAUDE.md`](CLAUDE.md).
 
@@ -104,7 +107,6 @@ Las plataformas cambian sus menús a menudo. Si ves una ruta desactualizada o un
 Proyecto en desarrollo. Pendiente, entre otros:
 
 - Verificar en las apps en español las rutas de LinkedIn, X y ChatGPT y los pasos de funciones de IA.
-- Publicar el catálogo en línea para recibir actualizaciones sin nueva versión de la app.
 - Publicación en Google Play y F-Droid.
 - Elegir licencia de código abierto.
 
