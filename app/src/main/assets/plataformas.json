@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "dataVersion": "2026-10-08",
+  "dataVersion": "2026-10-13",
   "platforms": [
     {
       "id": "instagram",
@@ -26,7 +26,20 @@
       "linkVerified": true,
       "notes": "Se aplica a todas las cuentas vinculadas en el Centro de cuentas. No borra lo que ya se haya usado para entrenar.",
       "sourceUrl": "https://www.tobiasholm.com/tech/how-to-turn-off-meta-ai",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "PARTIAL",
+        "summary": "Meta AI no se puede desactivar en Instagram. Puedes silenciar su chat para que no te moleste.",
+        "steps": [
+          "Toca la lupa (Buscar) y abre el chat de Meta AI.",
+          "Toca el icono «i» del chat.",
+          "Toca «Silenciar» y elige «Hasta que lo cambie»."
+        ],
+        "linkVerified": false,
+        "notes": "La barra «Pregunta a Meta AI» del buscador no se puede quitar. Los nombres de los menús pueden variar según la versión de la app.",
+        "sourceUrl": "https://www.inro.social/blog/meta-ai-instagram-guide",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "facebook",
@@ -53,7 +66,20 @@
       "linkVerified": true,
       "notes": "Si ya lo hiciste desde Instagram con las cuentas vinculadas, puede que no sea necesario repetirlo.",
       "sourceUrl": "https://www.tobiasholm.com/tech/how-to-turn-off-meta-ai",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "PARTIAL",
+        "summary": "Meta AI no se puede desactivar en Facebook. Puedes silenciarlo y quitar los resúmenes de comentarios con IA.",
+        "steps": [
+          "Abre el chat de Meta AI (desde la búsqueda o Messenger), toca «i» y luego «Silenciar» > «Hasta que lo cambie».",
+          "Ve a Menú > Configuración y privacidad > Configuración > Publicaciones.",
+          "Desactiva los resúmenes de comentarios con IA en tus publicaciones."
+        ],
+        "linkVerified": false,
+        "notes": "Meta AI sigue apareciendo en el buscador. Rutas tomadas de guías de terceros; pueden variar en la versión actual.",
+        "sourceUrl": "https://adguard-vpn.com/en/blog/how-to-turn-off-meta-ai-on-facebook.html",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "whatsapp",
@@ -71,7 +97,21 @@
       ],
       "linkVerified": false,
       "sourceUrl": "https://www.iamexpat.de/expat-info/germany-news/how-european-users-can-opt-out-meta-using-their-data-train-ai",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "NONE",
+        "summary": "Meta AI no se puede desactivar en WhatsApp. Puedes no usarlo, borrar lo que le hayas escrito y bloquearlo en chats concretos.",
+        "steps": [
+          "No toques el círculo azul de Meta AI.",
+          "Si ya le escribiste, envía /reset-all-ais en su chat y después elimina el chat.",
+          "En chats sensibles, activa la privacidad avanzada del chat: impide usar Meta AI en esa conversación.",
+          "Si administras un grupo, elimina a Meta AI del grupo."
+        ],
+        "linkVerified": false,
+        "notes": "El círculo de Meta AI y sus sugerencias en la búsqueda no se pueden quitar. Los resúmenes y la ayuda para escribir vienen desactivados por defecto.",
+        "sourceUrl": "https://getkanal.com/blog/meta-ai-whatsapp",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "linkedin",
@@ -90,7 +130,19 @@
       "url": "https://www.linkedin.com/mypreferences/d/settings/data-for-ai-improvement",
       "linkVerified": false,
       "sourceUrl": "https://theslowai.substack.com/p/stop-ai-training-on-your-data",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "NONE",
+        "summary": "LinkedIn no tiene interruptor para sus funciones de IA, pero solo se activan si las pulsas.",
+        "steps": [
+          "No pulses los botones de escribir o reescribir con IA cuando aparezcan.",
+          "Para que no usen tus datos al entrenar, completa la tarea de «Entrenamiento»."
+        ],
+        "linkVerified": false,
+        "notes": "No existe un ajuste oficial para ocultar estas funciones. Información de fuentes de terceros, sin confirmar en el centro de ayuda de LinkedIn.",
+        "sourceUrl": "https://www.ibtimes.co.uk/linkedin-removes-ai-writing-tool-ai-slop-reports-1815794",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "x",
@@ -110,7 +162,20 @@
       "linkVerified": false,
       "notes": "Si usas la app de Grok por separado: Settings > Data Controls.",
       "sourceUrl": "https://help.x.com/en/using-x/about-grok",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "NONE",
+        "summary": "En la app de X no se puede ocultar el botón ni la pestaña de Grok. Puedes no usarlo y borrar su historial.",
+        "steps": [
+          "No uses el botón ni la pestaña de Grok.",
+          "Opcional: en Configuración y privacidad > Privacidad y seguridad > Grok y colaboradores externos, borra el historial de conversaciones con Grok."
+        ],
+        "url": "https://x.com/settings/grok_settings",
+        "linkVerified": false,
+        "notes": "Ningún ajuste oficial oculta Grok en la app.",
+        "sourceUrl": "https://help.x.com/en/using-x/about-grok",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "gemini",
@@ -130,7 +195,21 @@
       "linkVerified": true,
       "notes": "El ajuste se llama \"Keep Activity\". Google conserva los chats 72 horas aunque esté desactivado.",
       "sourceUrl": "https://support.google.com/gemini/answer/13278892",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "PARTIAL",
+        "summary": "Puedes evitar que Gemini se abra solo en el móvil y apagar la IA de Gmail. Las respuestas con IA del buscador no se pueden quitar.",
+        "steps": [
+          "Ajustes del móvil > Sistema > Gestos > «Mantener pulsado el botón de encendido»: elige una opción que no sea Gemini.",
+          "App Gemini > foto de perfil > Ajustes: desactiva «Hey Google» y Gemini en la pantalla de bloqueo.",
+          "Ajustes > Aplicaciones > Aplicaciones predeterminadas > Asistente digital: elige «Ninguno».",
+          "Gmail > Menú > Ajustes > tu cuenta: desmarca «Funciones inteligentes»."
+        ],
+        "linkVerified": false,
+        "notes": "Las rutas de Ajustes cambian según el fabricante del móvil. En la UE las funciones inteligentes de Gmail suelen venir desactivadas. Para las respuestas con IA del buscador, usa el filtro «Web».",
+        "sourceUrl": "https://support.google.com/gemini/answer/16938321",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "chatgpt",
@@ -149,7 +228,22 @@
       "linkVerified": false,
       "notes": "Solo afecta a las conversaciones futuras.",
       "sourceUrl": "https://www.humandatarights.org/guides/how-to-opt-out-of-ai-training/",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "TOGGLE",
+        "summary": "Puedes apagar la memoria de ChatGPT para que no guarde datos tuyos ni use tus chats anteriores.",
+        "steps": [
+          "Abre Configuración > Personalización > Memoria.",
+          "Desactiva «Consultar memorias guardadas».",
+          "Desactiva también «Consultar historial de chats».",
+          "Opcional: borra las memorias ya guardadas en «Gestionar memorias»."
+        ],
+        "url": "https://chatgpt.com/#settings/Personalization",
+        "linkVerified": false,
+        "notes": "Las memorias guardadas no se borran solas al desactivar la memoria. Para una conversación puntual puedes usar el chat temporal.",
+        "sourceUrl": "https://help.openai.com/en/articles/8590148-memory-faq",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "claude",
@@ -167,7 +261,21 @@
       "url": "https://claude.ai/settings/data-privacy-controls",
       "linkVerified": true,
       "sourceUrl": "https://theslowai.substack.com/p/stop-ai-training-on-your-data",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "TOGGLE",
+        "summary": "Puedes apagar la memoria de Claude y la búsqueda en tus chats anteriores.",
+        "steps": [
+          "Abre Configuración > Capacidades.",
+          "Desactiva la búsqueda y consulta de chats anteriores.",
+          "En la memoria, elige pausarla o restablecerla (esto último la borra)."
+        ],
+        "url": "https://claude.ai/settings/capabilities",
+        "linkVerified": false,
+        "notes": "Para una conversación puntual puedes usar el modo incógnito.",
+        "sourceUrl": "https://support.claude.com/en/articles/11817273",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "reddit",
@@ -191,7 +299,19 @@
       "linkVerified": true,
       "notes": "Borrar contenido evita usos futuros, pero no garantiza que terceros eliminen copias ya obtenidas.",
       "sourceUrl": "https://meprism.com/opt-out-guides/blog/reddit-ai-data-licensing-opt-out",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "NONE",
+        "summary": "Reddit Answers no se puede desactivar. Basta con usar la búsqueda normal.",
+        "steps": [
+          "Usa la búsqueda normal y no la pestaña o el botón «Answers».",
+          "Ignora los bloques de respuestas con IA que aparecen en las publicaciones."
+        ],
+        "linkVerified": false,
+        "notes": "No hay ajuste oficial conocido para desactivarlo.",
+        "sourceUrl": "https://www.yahoo.com/news/article/moderators-call-ai-controls-reddit-230749897.html",
+        "updatedOn": "2026-10-13"
+      }
     },
     {
       "id": "adobe",
@@ -212,7 +332,20 @@
       "url": "https://account.adobe.com/privacy",
       "linkVerified": true,
       "sourceUrl": "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html",
-      "updatedOn": "2026-09-30"
+      "updatedOn": "2026-09-30",
+      "aiFeatures": {
+        "mechanism": "TOGGLE",
+        "summary": "En Acrobat puedes desactivar las funciones de IA generativa (AI Assistant).",
+        "steps": [
+          "Abre la app de Acrobat y toca tu foto de perfil (arriba a la derecha).",
+          "Toca «Preferencias».",
+          "Desactiva «Habilitar funciones de IA generativa»."
+        ],
+        "linkVerified": false,
+        "notes": "Algunos usuarios de Android indican que el botón de AI Assistant sigue visible tras desactivarlo. Revisa el ajuste tras cada actualización.",
+        "sourceUrl": "https://helpx.adobe.com/acrobat/using/disable-generative-ai.html",
+        "updatedOn": "2026-10-13"
+      }
     }
   ]
 }

@@ -3,7 +3,8 @@
 
     <!-- Lista -->
     <string name="action_refresh">Actualizar</string>
-    <string name="progress_title">%1$d de %2$d plataformas protegidas</string>
+    <string name="progress_title">%1$d de %2$d ajustes completados</string>
+    <string name="progress_breakdown">Entrenamiento: %1$d/%2$d · Funciones de IA: %3$d/%4$d</string>
     <string name="progress_hint">Toca una plataforma para ver los pasos. Tu progreso se guarda solo en este móvil.</string>
     <string name="section_installed">Instaladas en tu móvil</string>
     <string name="section_other">Otras plataformas</string>
@@ -17,6 +18,13 @@
     <!-- Detalle -->
     <string name="action_back">Atrás</string>
     <string name="steps_title">Pasos</string>
+    <string name="task_training_title">No usar mis datos para entrenar IA</string>
+    <string name="task_features_title">Desactivar funciones de IA</string>
+    <string name="task_training_short">Entrenamiento %1$s</string>
+    <string name="task_features_short">Funciones IA %1$s</string>
+    <string name="features_toggle">Se puede desactivar</string>
+    <string name="features_partial">Solo se puede desactivar en parte</string>
+    <string name="features_none">No se puede desactivar: te damos alternativas</string>
     <string name="regions_label">Disponible en: %1$s</string>
     <string name="review_warning">La plataforma ha cambiado desde que lo marcaste. Revisa los pasos y vuelve a comprobar el ajuste.</string>
     <string name="action_open_setting">Abrir el ajuste</string>

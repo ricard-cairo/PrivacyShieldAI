@@ -4,6 +4,7 @@ import com.example.privacyshieldai.data.Mechanism
 import com.example.privacyshieldai.data.Platform
 import com.example.privacyshieldai.domain.PlatformStatus
 import com.example.privacyshieldai.domain.computeStatus
+import com.example.privacyshieldai.domain.overallStatus
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -37,5 +38,25 @@ class PlatformStatusTest {
     @Test
     fun invalidStoredDateNeedsReview() {
         assertEquals(PlatformStatus.REVIEW, computeStatus(platform("2026-09-30"), "no-es-fecha"))
+    }
+
+    @Test
+    fun statusFromDatesWorksForAnyTask() {
+        assertEquals(PlatformStatus.DONE, computeStatus("2026-10-13", "2026-10-13"))
+        assertEquals(PlatformStatus.REVIEW, computeStatus("2026-12-01", "2026-10-13"))
+    }
+
+    @Test
+    fun overallStatusIsTheMostUrgent() {
+        assertEquals(
+            PlatformStatus.REVIEW,
+            overallStatus(listOf(PlatformStatus.DONE, PlatformStatus.REVIEW)),
+        )
+        assertEquals(
+            PlatformStatus.PENDING,
+            overallStatus(listOf(PlatformStatus.DONE, PlatformStatus.PENDING)),
+        )
+        assertEquals(PlatformStatus.DONE, overallStatus(listOf(PlatformStatus.DONE, PlatformStatus.DONE)))
+        assertEquals(PlatformStatus.PENDING, overallStatus(emptyList()))
     }
 }

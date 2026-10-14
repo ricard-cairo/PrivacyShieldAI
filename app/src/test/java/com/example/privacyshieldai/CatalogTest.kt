@@ -40,7 +40,7 @@ class CatalogTest {
     @Test
     fun linksAreHttps() {
         catalog.platforms.forEach { p ->
-            listOfNotNull(p.url, p.extraUrl, p.sourceUrl).forEach { url ->
+            listOfNotNull(p.url, p.extraUrl, p.sourceUrl, p.aiFeatures?.url, p.aiFeatures?.sourceUrl).forEach { url ->
                 assertTrue("${p.id}: $url no es https", url.startsWith("https://"))
             }
         }
@@ -72,6 +72,17 @@ class CatalogTest {
     fun everyPlatformHasAtLeastOnePackage() {
         catalog.platforms.forEach { p ->
             assertTrue("${p.id}: sin paquetes Android", p.packages.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun everyPlatformHasAiFeaturesGuide() {
+        catalog.platforms.forEach { p ->
+            val f = p.aiFeatures
+            assertNotNull("${p.id}: sin guía de funciones de IA", f)
+            assertTrue("${p.id}: funciones IA sin pasos", f!!.steps.isNotEmpty())
+            assertTrue("${p.id}: funciones IA sin fuente", !f.sourceUrl.isNullOrBlank())
+            LocalDate.parse(f.updatedOn)
         }
     }
 

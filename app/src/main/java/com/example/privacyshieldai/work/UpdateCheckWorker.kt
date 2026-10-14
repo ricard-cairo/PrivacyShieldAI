@@ -45,7 +45,11 @@ class UpdateCheckWorker(
         if (store.lastNotifiedVersion() == catalog.dataVersion) return
         val progress = store.snapshot()
         val changed = catalog.platforms
-            .filter { computeStatus(it, progress[it.id]) == PlatformStatus.REVIEW }
+            .filter { platform ->
+                val training = computeStatus(platform.updatedOn, progress.training[platform.id])
+                val features = platform.aiFeatures?.let { computeStatus(it.updatedOn, progress.features[platform.id]) }
+                training == PlatformStatus.REVIEW || features == PlatformStatus.REVIEW
+            }
             .map { it.name }
         if (changed.isNotEmpty()) {
             Notifications.showReviewNeeded(app, changed)

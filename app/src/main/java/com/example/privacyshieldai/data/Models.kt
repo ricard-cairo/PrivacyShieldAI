@@ -51,4 +51,33 @@ data class Platform(
     val sourceUrl: String? = null,
     /** Fecha ISO del último cambio de instrucciones o de política de esta plataforma. */
     val updatedOn: String,
+    /** Guía para desactivar u ocultar las funciones de IA de la plataforma (segunda tarea). */
+    val aiFeatures: AiFeatures? = null,
+)
+
+/** Hasta qué punto se pueden desactivar las funciones de IA de una plataforma. */
+@Serializable
+enum class FeatureMechanism {
+    /** Hay un interruptor real. */
+    TOGGLE,
+
+    /** Solo se pueden desactivar algunas funciones u ocultarlas/silenciarlas. */
+    PARTIAL,
+
+    /** No se pueden desactivar; solo recomendaciones. */
+    NONE,
+}
+
+/** Guía para desactivar las funciones de IA (asistentes, resúmenes, memoria...). Independiente del entrenamiento. */
+@Serializable
+data class AiFeatures(
+    val mechanism: FeatureMechanism,
+    val summary: String,
+    val steps: List<String>,
+    val url: String? = null,
+    val linkVerified: Boolean = false,
+    val notes: String? = null,
+    val sourceUrl: String? = null,
+    /** Igual que Platform.updatedOn, pero para esta tarea: si cambia, la tarea pasa a "Revisar". */
+    val updatedOn: String,
 )

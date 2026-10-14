@@ -12,7 +12,9 @@ import com.example.privacyshieldai.data.PlatformRepository
 import com.example.privacyshieldai.data.ProgressStore
 import com.example.privacyshieldai.data.RefreshResult
 import com.example.privacyshieldai.domain.PlatformStatus
+import com.example.privacyshieldai.domain.Task
 import com.example.privacyshieldai.domain.computeStatus
+import com.example.privacyshieldai.domain.overallStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,11 +27,22 @@ import kotlinx.coroutines.withContext
 
 data class PlatformItem(
     val platform: Platform,
-    val status: PlatformStatus,
+    /** Estado de la tarea "Entrenamiento". */
+    val trainingStatus: PlatformStatus,
+    /** Estado de la tarea "Funciones de IA", o null si la plataforma no tiene guía. */
+    val featuresStatus: PlatformStatus? = null,
     /** Paquete de la app instalada en el móvil, o null si no está instalada. */
     val installedPackage: String? = null,
 ) {
     val isInstalled: Boolean get() = installedPackage != null
+
+    /** Estado global (el más urgente de sus tareas). Es el que se muestra en la lista. */
+    val status: PlatformStatus = overallStatus(listOfNotNull(trainingStatus, featuresStatus))
+
+    fun statusOf(task: Task): PlatformStatus? = when (task) {
+        Task.TRAINING -> trainingStatus
+        Task.FEATURES -> featuresStatus
+    }
 }
 
 /** Mensajes puntuales para la UI (el texto vive en strings.xml). */
@@ -42,7 +55,13 @@ data class UiState(
     val refreshing: Boolean = false,
     val message: UserMessage? = null,
 ) {
-    val doneCount: Int = items.count { it.status == PlatformStatus.DONE }
+    /** Tareas completadas / totales (entrenamiento + funciones de IA). */
+    val doneTasks: Int = items.count { it.trainingStatus == PlatformStatus.DONE } +
+        items.count { it.featuresStatus == PlatformStatus.DONE }
+    val trainingDone: Int = items.count { it.trainingStatus == PlatformStatus.DONE }
+    val featuresDone: Int = items.count { it.featuresStatus == PlatformStatus.DONE }
+    val featuresTotal: Int = items.count { it.featuresStatus != null }
+    val totalTasks: Int = items.size + featuresTotal
     val installedItems: List<PlatformItem> = items.filter { it.isInstalled }
     val otherItems: List<PlatformItem> = items.filterNot { it.isInstalled }
 }
@@ -72,7 +91,16 @@ class MainViewModel(
             UiState(
                 loading = false,
                 items = catalog.platforms
-                    .map { PlatformItem(it, computeStatus(it, progress[it.id]), installedMap[it.id]) }
+                    .map { platform ->
+                        PlatformItem(
+                            platform = platform,
+                            trainingStatus = computeStatus(platform.updatedOn, progress.training[platform.id]),
+                            featuresStatus = platform.aiFeatures?.let {
+                                computeStatus(it.updatedOn, progress.features[platform.id])
+                            },
+                            installedPackage = installedMap[platform.id],
+                        )
+                    }
                     .sortedBy { it.status.ordinal }, // Revisar > Pendiente > Hecho; estable dentro de cada grupo
                 dataVersion = catalog.dataVersion,
                 refreshing = isRefreshing,
@@ -115,9 +143,17 @@ class MainViewModel(
         }
     }
 
-    fun setDone(platform: Platform, done: Boolean) {
+    fun setDone(platform: Platform, task: Task, done: Boolean) {
+        val updatedOn = when (task) {
+            Task.TRAINING -> platform.updatedOn
+            Task.FEATURES -> platform.aiFeatures?.updatedOn ?: return
+        }
         viewModelScope.launch {
-            if (done) progressStore.markDone(platform) else progressStore.markPending(platform.id)
+            if (done) {
+                progressStore.markDone(task, platform.id, updatedOn)
+            } else {
+                progressStore.markPending(task, platform.id)
+            }
         }
     }
 

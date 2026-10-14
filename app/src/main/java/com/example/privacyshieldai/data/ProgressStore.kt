@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.privacyshieldai.domain.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -13,33 +14,43 @@ import kotlinx.coroutines.flow.map
 private val Context.progressDataStore: DataStore<Preferences> by preferencesDataStore(name = "progress")
 
 /**
+ * Progreso del usuario por tarea: id de plataforma -> `updatedOn` con el que se marcó como hecha.
+ */
+data class UserProgress(
+    val training: Map<String, String> = emptyMap(),
+    val features: Map<String, String> = emptyMap(),
+)
+
+/**
  * Progreso del usuario, guardado solo en el dispositivo.
- * Por cada plataforma marcada como hecha se guarda el valor de `updatedOn` de ese momento;
- * si el catálogo trae una fecha posterior, la plataforma pasa a "Revisar".
+ * Por cada tarea marcada como hecha se guarda el valor de `updatedOn` de ese momento;
+ * si el catálogo trae una fecha posterior, la tarea pasa a "Revisar".
  */
 class ProgressStore(context: Context) {
 
     private val dataStore = context.applicationContext.progressDataStore
 
-    /** Mapa id de plataforma -> `updatedOn` con el que se marcó como hecha. */
-    val progress: Flow<Map<String, String>> = dataStore.data.map { prefs ->
-        prefs.asMap().entries.mapNotNull { (key, value) ->
-            if (key.name.startsWith(DONE_PREFIX) && value is String) {
-                key.name.removePrefix(DONE_PREFIX) to value
-            } else {
-                null
-            }
-        }.toMap()
+    val progress: Flow<UserProgress> = dataStore.data.map { prefs ->
+        val all = prefs.asMap().entries.mapNotNull { (key, value) ->
+            if (value is String) key.name to value else null
+        }
+        UserProgress(
+            training = all.filter { it.first.startsWith(TRAINING_PREFIX) }
+                .associate { it.first.removePrefix(TRAINING_PREFIX) to it.second },
+            features = all.filter { it.first.startsWith(FEATURES_PREFIX) }
+                .associate { it.first.removePrefix(FEATURES_PREFIX) to it.second },
+        )
     }
 
-    suspend fun snapshot(): Map<String, String> = progress.first()
+    suspend fun snapshot(): UserProgress = progress.first()
 
-    suspend fun markDone(platform: Platform) {
-        dataStore.edit { it[doneKey(platform.id)] = platform.updatedOn }
+    /** Marca la tarea como hecha guardando la versión (`updatedOn`) de sus instrucciones. */
+    suspend fun markDone(task: Task, platformId: String, updatedOn: String) {
+        dataStore.edit { it[key(task, platformId)] = updatedOn }
     }
 
-    suspend fun markPending(platformId: String) {
-        dataStore.edit { it.remove(doneKey(platformId)) }
+    suspend fun markPending(task: Task, platformId: String) {
+        dataStore.edit { it.remove(key(task, platformId)) }
     }
 
     /** Última versión del catálogo por la que ya se envió un aviso (evita avisos repetidos). */
@@ -49,10 +60,17 @@ class ProgressStore(context: Context) {
         dataStore.edit { it[LAST_NOTIFIED] = version }
     }
 
-    private fun doneKey(platformId: String) = stringPreferencesKey(DONE_PREFIX + platformId)
+    private fun key(task: Task, platformId: String) = stringPreferencesKey(
+        when (task) {
+            Task.TRAINING -> TRAINING_PREFIX
+            Task.FEATURES -> FEATURES_PREFIX
+        } + platformId
+    )
 
     private companion object {
-        const val DONE_PREFIX = "done_"
+        // "done_" se mantiene para no perder el progreso guardado por versiones anteriores.
+        const val TRAINING_PREFIX = "done_"
+        const val FEATURES_PREFIX = "feat_"
         val LAST_NOTIFIED = stringPreferencesKey("last_notified_version")
     }
 }

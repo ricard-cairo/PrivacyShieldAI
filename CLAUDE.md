@@ -1,6 +1,9 @@
 # Privacy Shield AI
 
-App Android **gratuita, sin anuncios y de código abierto** que guía al público general para impedir que sus datos se usen para entrenar IAs en 10 plataformas: Instagram, Facebook, WhatsApp, LinkedIn, X, Gemini, ChatGPT, Claude, Reddit y Adobe.
+App Android **gratuita, sin anuncios y de código abierto** que guía al público general en 10 plataformas (Instagram, Facebook, WhatsApp, LinkedIn, X, Gemini, ChatGPT, Claude, Reddit y Adobe) para dos tareas:
+
+1. **Entrenamiento:** impedir que sus datos se usen para entrenar IAs.
+2. **Funciones de IA:** desactivar u ocultar los asistentes y funciones de IA (Meta AI, Grok, Gemini, memoria de ChatGPT/Claude, AI Assistant de Acrobat...). Cuando no se pueden desactivar, la guía lo dice claramente y da alternativas.
 
 La app **no automatiza** nada en las cuentas del usuario: muestra los pasos, abre el ajuste exacto cuando hay enlace directo, guarda qué ha hecho y avisa cuando una plataforma cambia.
 
@@ -64,15 +67,19 @@ PrivacyShieldAI/
 
 ### Pantalla de lista
 
-- Cabecera con el progreso: "X de 10 plataformas protegidas".
+- Cabecera con el progreso global ("X de 20 ajustes completados"), barra de progreso y desglose "Entrenamiento: a/10 · Funciones de IA: b/10".
+- Cada fila muestra el estado global (el más urgente de sus dos tareas) y debajo "Entrenamiento ✓ · Funciones IA •".
 - Sección **"Instaladas en tu móvil"** arriba y **"Otras plataformas"** debajo. Dentro de cada una, orden por estado: Revisar > Pendiente > Hecho.
 - La detección de apps instaladas se repite cada vez que el usuario vuelve a la app (`LifecycleResumeEffect`) y tras descargar un catálogo nuevo. Una app preinstalada pero desactivada no cuenta como instalada.
 - Botón **"Actualizar"** (barra superior): fuerza la descarga del catálogo remoto. Mensajes: información nueva / ya está al día / error / no configurado. La misma comprobación se hace sola al abrir la app (sin mensaje salvo si hay novedades) y una vez al día en segundo plano.
 
 ### Pantalla de detalle
 
-- Icono, estado, categoría (y "Instalada en este móvil"), resumen, regiones, pasos numerados y notas.
-- Botones según `mechanism`:
+- Cabecera: icono, estado global, categoría (y "Instalada en este móvil") y botón **"Abrir la app de X"** si está instalada.
+- Dos bloques (`TaskSection`), cada uno con su estado, aviso de Revisar, resumen, pasos, notas, botones, "Ya lo he hecho"/"Marcar como pendiente", fecha y "Ver fuente":
+  1. **"No usar mis datos para entrenar IA"** (campos de primer nivel de la plataforma).
+  2. **"Desactivar funciones de IA"** (`aiFeatures`), con un subtítulo según `FeatureMechanism`: `TOGGLE` "Se puede desactivar", `PARTIAL` "Solo se puede desactivar en parte", `NONE` "No se puede desactivar: te damos alternativas". Si tiene `url`, botón "Abrir el ajuste" (también en `NONE`, p. ej. para borrar el historial de Grok).
+- Botones del bloque de entrenamiento según `mechanism`:
 
 | `mechanism` | Botón | Comportamiento |
 | --- | --- | --- |
@@ -81,15 +88,15 @@ PrivacyShieldAI/
 | `REQUEST` | "Enviar solicitud por correo" | Abre el correo con la plantilla RGPD (art. 21) en inglés de `strings.xml` |
 | `NONE` | Ninguno | Solo pasos y recomendaciones |
 
-- Si la app está instalada: botón adicional **"Abrir la app de X"** (útil en WhatsApp e Instagram/Facebook).
 - Si `linkVerified` es `false`, aviso bajo el botón de ajuste.
-- "Ya lo he hecho" / "Marcar como pendiente". La primera vez que se marca una plataforma como hecha se pide el permiso de notificaciones (Android 13+).
-- "Ver fuente" abre `sourceUrl` en Custom Tab.
+- La primera vez que se marca una tarea como hecha se pide el permiso de notificaciones (Android 13+).
 
 ### Estados y avisos
 
-- `ProgressStore` guarda, por plataforma marcada, el `updatedOn` de ese momento. `computeStatus()` compara con el catálogo actual: sin marca = Pendiente; igual = Hecho; catálogo con fecha posterior = Revisar.
-- `UpdateCheckWorker` (diario, con red): si hay plataformas en Revisar y no se ha avisado ya de esa `dataVersion`, envía una notificación. Solo reintenta errores de red.
+- Dos tareas por plataforma (`domain.Task`: `TRAINING`, `FEATURES`), cada una con su propio progreso y su propio `updatedOn`.
+- `ProgressStore` guarda, por tarea marcada, el `updatedOn` de ese momento. Claves: `done_<id>` para entrenamiento (se mantiene por compatibilidad con versiones anteriores) y `feat_<id>` para funciones de IA.
+- `computeStatus(updatedOn, marcado)` compara con el catálogo actual: sin marca = Pendiente; igual = Hecho; catálogo con fecha posterior = Revisar. `overallStatus()` da el más urgente (Revisar > Pendiente > Hecho).
+- `UpdateCheckWorker` (diario, con red): si alguna tarea está en Revisar y no se ha avisado ya de esa `dataVersion`, envía una notificación. Solo reintenta errores de red.
 
 ### Tema e icono
 
@@ -101,7 +108,8 @@ PrivacyShieldAI/
 
 - `schemaVersion`: subir solo si hay cambios incompatibles (y actualizar `CatalogParser.SUPPORTED_SCHEMA_VERSION`). Campos nuevos opcionales no requieren subirlo (`ignoreUnknownKeys`).
 - `dataVersion`: fecha ISO de la última revisión. **Subirla en cada publicación**; la app solo acepta catálogos más nuevos.
-- Por plataforma: `id` (estable, nunca cambiarlo), `name`, `category`, `mechanism`, `packages` (paquetes Android, el principal primero), `regions`, `summary`, `steps`, `url`/`email`, `linkVerified`, `notes`, `sourceUrl`, `updatedOn`.
+- Por plataforma: `id` (estable, nunca cambiarlo), `name`, `category`, `mechanism`, `packages` (paquetes Android, el principal primero), `regions`, `summary`, `steps`, `url`/`email`, `linkVerified`, `notes`, `sourceUrl`, `updatedOn` y `aiFeatures`.
+- `aiFeatures` (funciones de IA): `mechanism` (`TOGGLE` | `PARTIAL` | `NONE`), `summary`, `steps`, `url`, `linkVerified`, `notes`, `sourceUrl`, `updatedOn` (independiente del de entrenamiento). **Ser honesto:** si algo no se puede desactivar, usar `NONE`/`PARTIAL` y decirlo en `summary`; nunca prometer un interruptor que no existe.
 - **Los pasos no deben referirse a botones que no existen** (p. ej. "usa el enlace de abajo" en plataformas `FORM`).
 - **`updatedOn` decide los avisos:** si cambia, quien tenía la plataforma marcada pasa a "Revisar" y recibe una notificación. Cambiarlo solo cuando la plataforma cambie de verdad su política o su ruta, no por correcciones de texto.
 - Cada ruta debe tener `sourceUrl`; preferir fuentes oficiales. Si el enlace directo no se ha comprobado, `linkVerified: false`.
@@ -118,8 +126,8 @@ gradlew.bat lint                 # revisión estática
 
 Tests en `app/src/test`:
 
-- `CatalogTest`: 10 plataformas, ids únicos, https, pasos, fechas, acción según `mechanism`, paquetes = `<queries>` del manifest, ida y vuelta del JSON, versión de esquema.
-- `PlatformStatusTest`: Pendiente / Hecho / Revisar.
+- `CatalogTest`: 10 plataformas, ids únicos, https (también en `aiFeatures`), pasos, fechas, acción según `mechanism`, guía de funciones de IA con pasos y fuente, paquetes = `<queries>` del manifest, ida y vuelta del JSON, versión de esquema.
+- `PlatformStatusTest`: Pendiente / Hecho / Revisar y estado global.
 
 Ejecutarlos siempre después de tocar `plataformas.json` o el manifest.
 
@@ -138,6 +146,7 @@ Ejecutarlos siempre después de tocar `plataformas.json` o el manifest.
 - [ ] Borrar los `.webp` de `mipmap-hdpi` a `mipmap-xxxhdpi` (icono antiguo; con minSdk 26 se usa siempre el adaptativo).
 - [ ] Ocultar el botón "Actualizar" mientras `REMOTE_CATALOG_URL` sea null (propuesto, sin decidir).
 - [ ] Confirmar en un móvil real los nombres de paquete (sobre todo Adobe y Gemini; valorar añadir la app de Google para Gemini).
+- [ ] Verificar en las apps en español los pasos de `aiFeatures` (todos tienen `linkVerified: false`; varias fuentes son de terceros, sobre todo Meta, LinkedIn y Reddit).
 - [ ] Verificar en las apps en español las rutas de LinkedIn, X y ChatGPT y marcar `linkVerified`.
 - [ ] Publicar el catálogo en GitHub Pages y configurar `REMOTE_CATALOG_URL`.
 - [ ] Elegir licencia de código abierto (p. ej. GPL-3.0 o Apache-2.0) y añadir `LICENSE`.

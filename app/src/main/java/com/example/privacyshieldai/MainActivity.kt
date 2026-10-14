@@ -54,8 +54,8 @@ class MainActivity : ComponentActivity() {
                     PlatformDetailScreen(
                         item = selected,
                         onBack = { selectedId = null },
-                        onSetDone = { done ->
-                            viewModel.setDone(selected.platform, done)
+                        onSetDone = { task, done ->
+                            viewModel.setDone(selected.platform, task, done)
                             if (done && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                                 !Notifications.canNotify(context)
                             ) {

@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.privacyshieldai.R
+import com.example.privacyshieldai.domain.PlatformStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,7 +116,16 @@ private fun PlatformRow(item: PlatformItem, onOpenPlatform: (String) -> Unit) {
     ListItem(
         leadingContent = { PlatformIcon(item) },
         headlineContent = { Text(item.platform.name) },
-        supportingContent = { Text(item.platform.category) },
+        supportingContent = {
+            Column {
+                Text(item.platform.category)
+                Text(
+                    text = taskSummary(item),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        },
         trailingContent = { StatusBadge(item.status) },
         modifier = Modifier.clickable { onOpenPlatform(item.platform.id) },
     )
@@ -124,8 +134,8 @@ private fun PlatformRow(item: PlatformItem, onOpenPlatform: (String) -> Unit) {
 
 @Composable
 private fun ProgressHeader(state: UiState) {
-    val total = state.items.size
-    val done = state.doneCount
+    val total = state.totalTasks
+    val done = state.doneTasks
     Card(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -140,11 +150,35 @@ private fun ProgressHeader(state: UiState) {
                 modifier = Modifier.fillMaxWidth(),
             )
             Text(
+                text = stringResource(
+                    R.string.progress_breakdown,
+                    state.trainingDone,
+                    state.items.size,
+                    state.featuresDone,
+                    state.featuresTotal,
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Text(
                 text = stringResource(R.string.progress_hint),
                 style = MaterialTheme.typography.bodySmall,
             )
         }
     }
+}
+
+/** "Entrenamiento ✓ · Funciones IA •" para ver de un vistazo el estado de cada tarea. */
+@Composable
+private fun taskSummary(item: PlatformItem): String {
+    val training = stringResource(R.string.task_training_short, item.trainingStatus.symbol())
+    val features = item.featuresStatus?.let { stringResource(R.string.task_features_short, it.symbol()) }
+    return listOfNotNull(training, features).joinToString(" · ")
+}
+
+private fun PlatformStatus.symbol(): String = when (this) {
+    PlatformStatus.DONE -> "✓"
+    PlatformStatus.PENDING -> "•"
+    PlatformStatus.REVIEW -> "!"
 }
 
 private fun UserMessage.textRes(): Int = when (this) {
